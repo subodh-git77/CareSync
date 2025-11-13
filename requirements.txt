@@ -1,0 +1,14 @@
+# === Core Flask and Utilities ===
+Flask==3.0.3
+Werkzeug==3.0.2
+python-dotenv==1.0.1
+
+# === Image and Computer Vision ===
+opencv-contrib-python==4.10.0.84
+numpy==1.26.4
+Pillow==10.3.0
+
+# === Optional but Recommended (Performance & Email Support) ===
+requests==2.32.3
+email-validator==2.1.1
+itsdangerous>=2.2.0
