@@ -1,0 +1,1023 @@
+/* =======================================================
+   🌿 CareSync - Smart Hospital Appointments System
+   Modern Medical Theme - Full Style Sheet
+   ======================================================= */
+
+/* ===== Global Reset ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #f4f7fb;
+  color: #333;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== Header ===== */
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 15px 30px;
+  background: linear-gradient(90deg, #007bff, #00bcd4);
+  color: white;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo img {
+  height: 50px;
+}
+
+.title {
+  flex: 1;
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+}
+
+.top-nav a {
+  margin-left: 15px;
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+  transition: 0.3s ease;
+}
+
+.top-nav a:hover {
+  color: #ffeb3b;
+}
+
+/* ===== Buttons ===== */
+.btn, .portal-btn {
+  display: inline-block;
+  padding: 12px 28px;
+  background: #007bff;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn:hover, .portal-btn:hover {
+  background: #0056b3;
+  transform: translateY(-2px);
+}
+
+.btn.primary {
+  background: #007bff;
+}
+
+.btn.secondary {
+  background: transparent;
+  border: 2px solid #007bff;
+  color: #007bff;
+}
+
+.btn.secondary:hover {
+  background: #007bff;
+  color: #fff;
+}
+
+/* ===== Homepage Hero ===== */
+.hero {
+  text-align: center;
+  margin: 100px auto;
+  max-width: 850px;
+  padding: 20px;
+  animation: fadeIn 1.2s ease-in-out;
+}
+
+.hero h1 {
+  font-size: 2.8rem;
+  color: #007bff;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.hero p {
+  font-size: 1.15rem;
+  color: #555;
+  margin-bottom: 35px;
+  line-height: 1.6;
+}
+
+.btn-group {
+  margin-top: 25px;
+}
+
+.btn-group a {
+  margin: 10px;
+}
+
+/* ===== Stats Section ===== */
+.stats {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin: 80px auto;
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+.stat-box h2 {
+  color: #007bff;
+  font-size: 2.5rem;
+}
+
+.stat-box p {
+  color: #555;
+  margin-top: 5px;
+  font-size: 1rem;
+}
+
+/* ===== FEATURE SECTION ===== */
+.features-section {
+  background: #f9f9fb;
+  padding: 100px 20px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.features-container {
+  max-width: 1100px;
+  width: 100%;
+}
+
+.features-section h2 {
+  font-size: 2.6rem;
+  font-weight: 700;
+  color: #007bff;
+  margin-bottom: 15px;
+  text-align: center;
+  position: relative;
+}
+
+.features-section h2::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, #007bff, #00bcd4);
+  margin: 12px auto 0;
+  border-radius: 2px;
+}
+
+.features-section p {
+  font-size: 1.15rem;
+  color: #555;
+  margin-bottom: 60px;
+  text-align: center;
+}
+
+/* Grid of features */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  justify-items: center;
+}
+
+.feature-box {
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 280px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.feature-box:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+.feature-box h3 {
+  color: #007bff;
+  margin-bottom: 12px;
+  font-size: 1.2rem;
+}
+
+.feature-box p {
+  color: #666;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* ===== How It Works ===== */
+.how-it-works {
+  background: #f9f9fb;
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.how-it-works h2 {
+  font-size: 2rem;
+  color: #007bff;
+  margin-bottom: 15px;
+}
+
+.how-it-works p {
+  color: #555;
+  font-size: 1.05rem;
+  margin-bottom: 40px;
+}
+
+.steps {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.step {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  padding: 25px;
+  width: 250px;
+  transition: 0.3s ease;
+}
+
+.step:hover {
+  transform: translateY(-5px);
+}
+
+.step span {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.how-cta {
+  margin-top: 40px;
+}
+
+/* ===== CTA Section ===== */
+.cta {
+  text-align: center;
+  padding: 80px 20px;
+  background: linear-gradient(120deg, #00bcd4, #007bff);
+  color: white;
+}
+
+.cta h2 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+}
+
+.cta p {
+  font-size: 1.1rem;
+  margin-bottom: 25px;
+}
+
+.cta .btn.large {
+  background: #fff;
+  color: #007bff;
+  padding: 14px 32px;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.cta .btn.large:hover {
+  background: #e3f2fd;
+}
+
+/* ===== Admin Login ===== */
+.login-container {
+  max-width: 420px;
+  margin: 60px auto;
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.login-container h2 {
+  margin-bottom: 20px;
+  color: #003366;
+}
+
+.form-group {
+  text-align: left;
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  color: #333;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.btn-login {
+  width: 100%;
+  background-color: #0078d4;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btn-login:hover {
+  background-color: #005fa3;
+}
+
+/* Flash messages */
+.flash-messages {
+  margin-top: 20px;
+}
+
+.alert {
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.alert.success { background-color: #d4edda; color: #155724; }
+.alert.danger { background-color: #f8d7da; color: #721c24; }
+.alert.warning { background-color: #fff3cd; color: #856404; }
+.alert.info { background-color: #d1ecf1; color: #0c5460; }
+
+/* ===== Admin Dashboard ===== */
+.dashboard {
+  padding: 40px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.dashboard h2 {
+  color: #007bff;
+  margin-bottom: 25px;
+}
+
+.dashboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+.dashboard-table th, .dashboard-table td {
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.dashboard-table th {
+  background: #007bff;
+  color: white;
+}
+
+.dashboard-table tr:hover {
+  background: #f1f9ff;
+}
+
+/* ===== Footer ===== */
+.footer {
+  text-align: center;
+  padding: 20px;
+  margin-top: auto;
+  background: #007bff;
+  color: white;
+  font-size: 0.9rem;
+}
+
+/* ===== Animations ===== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 768px) {
+  .title { font-size: 1.3rem; }
+  .hero h1 { font-size: 2rem; }
+  .features, .features-grid { grid-template-columns: 1fr; }
+  .stats { flex-direction: column; gap: 20px; }
+  .site-header { flex-direction: column; gap: 10px; text-align: center; }
+}
+
+/* ===== Register Page ===== */
+.register-section {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 80px 20px;
+  background: linear-gradient(135deg, #e3f2fd 0%, #f9f9fb 100%);
+}
+
+.register-card {
+  background: white;
+  width: 100%;
+  max-width: 700px;
+  padding: 40px 50px;
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  animation: fadeIn 1s ease;
+}
+
+.register-card h2 {
+  color: #007bff;
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+.register-card p {
+  color: #555;
+  margin-bottom: 30px;
+  font-size: 1rem;
+}
+
+/* ===== Form Layout ===== */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.form-group {
+  text-align: left;
+}
+
+.form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.form-group label {
+  display: block;
+  color: #333;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+/* ===== Submit Button ===== */
+.btn-submit {
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 30px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-submit:hover {
+  background: #0056b3;
+  transform: translateY(-2px);
+}
+
+/* ===== Note Below Form ===== */
+.note {
+  background: #e3f2fd;
+  border-radius: 10px;
+  padding: 15px 20px;
+  margin-top: 25px;
+  color: #0d47a1;
+  font-size: 0.95rem;
+  border-left: 4px solid #007bff;
+}
+
+/* Small screen optimization */
+@media (max-width: 600px) {
+  .register-card {
+    padding: 30px 20px;
+  }
+}
+/* ===== Register Page Styling ===== */
+.register-section {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e3f2fd 0%, #f9f9fb 100%);
+  padding: 80px 20px;
+}
+
+.register-card {
+  background: white;
+  width: 100%;
+  max-width: 700px;
+  padding: 40px 50px;
+  border-radius: 15px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  animation: fadeIn 1s ease;
+}
+
+.register-card h2 {
+  color: #007bff;
+  font-size: 1.9rem;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.register-card p {
+  color: #555;
+  font-size: 1rem;
+  margin-bottom: 30px;
+}
+
+/* Form grid layout */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.form-group {
+  text-align: left;
+}
+
+.form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.form-group label {
+  display: block;
+  color: #333;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+/* Submit Button */
+.btn-submit {
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 28px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-submit:hover {
+  background: #0056b3;
+  transform: translateY(-2px);
+}
+
+/* Information box */
+.note {
+  background: #e3f2fd;
+  border-left: 4px solid #007bff;
+  padding: 15px 20px;
+  border-radius: 10px;
+  margin-top: 25px;
+  color: #0d47a1;
+  font-size: 0.95rem;
+}
+
+/* Back to home */
+.back-home {
+  display: inline-block;
+  margin-top: 25px;
+  color: #007bff;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.back-home:hover {
+  color: #0056b3;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .register-card {
+    padding: 30px 20px;
+  }
+}
+/* Face Verification & Patient Pages */
+.verify-container, .details-card {
+  max-width: 600px;
+  margin: 80px auto;
+  background: #fff;
+  padding: 40px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.details-card p {
+  margin: 10px 0;
+  color: #333;
+}
+
+.error {
+  color: #d9534f;
+  font-weight: 600;
+}
+/* ====== Register Page ====== */
+.register-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 20px;
+  background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+  min-height: 90vh;
+}
+
+.register-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 40px;
+  max-width: 700px;
+  width: 100%;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.register-card h2 {
+  color: #007bff;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.register-card .subtitle {
+  color: #555;
+  font-size: 0.95rem;
+  margin-bottom: 25px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px 20px;
+  margin-bottom: 25px;
+}
+
+.form-group {
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 6px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.4);
+}
+
+.full-width {
+  grid-column: span 2;
+}
+
+.btn-submit {
+  width: 100%;
+  padding: 12px;
+  background: #007bff;
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-submit:hover {
+  background: #0056b3;
+  transform: translateY(-2px);
+}
+
+.note {
+  margin-top: 20px;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.back-home {
+  display: inline-block;
+  margin-top: 25px;
+  text-decoration: none;
+  color: #007bff;
+  font-weight: 500;
+}
+
+.back-home:hover {
+  text-decoration: underline;
+}
+/* ====== Patient Verified / Details Page ====== */
+.verified-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 90vh;
+  background: linear-gradient(135deg, #e3f2fd, #ffffff);
+  padding: 20px;
+}
+
+.verified-card {
+  background: #ffffff;
+  padding: 40px 50px;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  max-width: 650px;
+  text-align: center;
+  animation: fadeIn 0.8s ease;
+}
+
+.check-icon {
+  font-size: 4rem;
+  color: #28a745;
+  margin-bottom: 10px;
+}
+
+.verified-card h2 {
+  color: #007bff;
+  margin-bottom: 10px;
+  font-size: 1.9rem;
+  font-weight: 600;
+}
+
+.subtitle {
+  color: #555;
+  margin-bottom: 25px;
+  font-size: 1rem;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 15px;
+  text-align: left;
+}
+
+.detail-item {
+  background: #f8fbff;
+  border: 1px solid #e6ecf5;
+  border-radius: 10px;
+  padding: 12px 16px;
+  transition: 0.3s;
+}
+
+.detail-item:hover {
+  background: #eef6ff;
+  transform: translateY(-2px);
+}
+
+.detail-item .label {
+  font-weight: 600;
+  color: #333;
+  display: block;
+  margin-bottom: 3px;
+}
+
+.detail-item .value {
+  color: #555;
+  font-size: 0.95rem;
+}
+
+.detail-item .status {
+  color: #28a745;
+  font-weight: bold;
+}
+
+.footer-note {
+  margin-top: 25px;
+  background: #eaf7ff;
+  border-left: 4px solid #00bcd4;
+  color: #0b3954;
+  padding: 12px 14px;
+  border-radius: 8px;
+}
+
+.btn-group {
+  margin-top: 25px;
+}
+
+.btn-home, .btn-logout {
+  display: inline-block;
+  margin: 8px;
+  padding: 12px 25px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: 0.3s ease;
+}
+
+.btn-home {
+  background: #007bff;
+  color: white;
+}
+
+.btn-home:hover {
+  background: #0056b3;
+  transform: translateY(-2px);
+}
+
+.btn-logout {
+  background: #f44336;
+  color: white;
+}
+
+.btn-logout:hover {
+  background: #c62828;
+  transform: translateY(-2px);
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+/* ===== ADMIN DASHBOARD PAGE ===== */
+.admin-dashboard {
+  padding: 40px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.dashboard-header h2 {
+  color: #007bff;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.subtitle {
+  color: #555;
+  font-size: 0.95rem;
+  margin-top: 5px;
+}
+
+.logout-btn {
+  background: #f44336;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.logout-btn:hover {
+  background: #c62828;
+  transform: translateY(-2px);
+}
+
+/* ===== Stats Cards ===== */
+.stats-grid {
+  display: flex;
+  gap: 20px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+.stat-card {
+  flex: 1;
+  min-width: 220px;
+  background: linear-gradient(135deg, #007bff, #00bcd4);
+  color: white;
+  text-align: center;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+}
+
+.stat-card h3 {
+  font-size: 2rem;
+  margin-bottom: 5px;
+}
+
+/* ===== Patient Table ===== */
+.table-section {
+  margin-top: 40px;
+}
+
+.dashboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.dashboard-table th,
+.dashboard-table td {
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.dashboard-table th {
+  background: #007bff;
+  color: white;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.dashboard-table tr:hover {
+  background: #f1f9ff;
+}
+
+.no-data {
+  text-align: center;
+  color: #777;
+  font-style: italic;
+  padding: 20px;
+}
+
+
+
+
