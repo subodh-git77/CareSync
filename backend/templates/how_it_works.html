@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="how-it-works">
+  <h2>⚙️ How CareSync Works</h2>
+  <p>Your journey from booking to treatment is simple and smart.</p>
+
+  <div class="steps">
+    <div class="step">
+      <span>1️⃣</span>
+      <h3>Register & Upload</h3>
+      <p>Create your account and upload basic details like name, email, and health issue.</p>
+    </div>
+
+    <div class="step">
+      <span>2️⃣</span>
+      <h3>Book Appointment</h3>
+      <p>Select doctor, choose time slot, and confirm your booking — get email confirmation instantly.</p>
+    </div>
+
+    <div class="step">
+      <span>3️⃣</span>
+      <h3>AI Face Check-in</h3>
+      <p>When you visit, our system detects and verifies your face within seconds. Seamless & secure!</p>
+    </div>
+  </div>
+
+  <div class="how-cta">
+    <a href="{{ url_for('register.register_page') }}" class="btn large">Start Now</a>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="login-container">
+  <h2>📝 Register Patient</h2>
+  <form method="POST">
+    <label>ID:</label><input type="number" name="id" required><br>
+    <label>Name:</label><input type="text" name="name" required><br>
+    <label>Email:</label><input type="email" name="email" required><br>
+    <label>Password:</label><input type="password" name="password" required><br>
+    <label>Phone:</label><input type="text" name="phone"><br>
+    <label>Address:</label><input type="text" name="address"><br>
+    <label>Problem:</label><input type="text" name="problem"><br>
+    <label>Appointment Date:</label><input type="date" name="appointment"><br>
+    <button type="submit">Register</button>
+  </form>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, msg in messages %}
+        <p class="{{ category }}">{{ msg }}</p>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+</div>
+{% endblock %}

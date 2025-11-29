@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="bg-gradient-to-b from-blue-50 via-white to-green-50 min-h-screen py-16 px-6">
+  <div class="max-w-7xl mx-auto">
+
+    <!-- ===== Header Section ===== -->
+    <div class="flex flex-col md:flex-row items-start md:items-center justify-between mb-10">
+      <div>
+        <h2 class="text-3xl font-bold text-blue-700 flex items-center gap-2">
+          🏥 Welcome to <span class="text-green-600">Admin Staff Portal</span>
+        </h2>
+        <p class="text-gray-600 text-base mt-1">
+          Manage and approve patient verifications securely and efficiently.
+        </p>
+      </div>
+      <a href="{{ url_for('admin.logout') }}"
+         class="mt-4 md:mt-0 px-5 py-2 bg-gradient-to-r from-blue-600 to-green-500 text-white rounded-lg shadow-md hover:shadow-lg transition duration-300 flex items-center gap-2">
+        <i data-lucide="log-out" class="w-4 h-4"></i> Logout
+      </a>
+    </div>
+
+    <!-- ===== Stats Summary ===== -->
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+
+      <div class="stat-card border-t-4 border-blue-500 hover-glow">
+        <div class="flex flex-col items-center">
+          <div class="icon-wrapper bg-blue-100 text-blue-600">
+            <i data-lucide="users" class="w-8 h-8"></i>
+          </div>
+          <h3 class="text-4xl font-extrabold text-blue-700 mt-3">{{ stats.total_patients }}</h3>
+          <p class="text-gray-600 font-medium mt-1">Registered Patients</p>
+        </div>
+      </div>
+
+      <div class="stat-card border-t-4 border-green-500 hover-glow">
+        <div class="flex flex-col items-center">
+          <div class="icon-wrapper bg-green-100 text-green-600">
+            <i data-lucide="calendar-days" class="w-8 h-8"></i>
+          </div>
+          <h3 class="text-4xl font-extrabold text-green-700 mt-3">{{ stats.today_appointments }}</h3>
+          <p class="text-gray-600 font-medium mt-1">Today's Appointments</p>
+        </div>
+      </div>
+
+      <div class="stat-card border-t-4 border-yellow-500 hover-glow">
+        <div class="flex flex-col items-center">
+          <div class="icon-wrapper bg-yellow-100 text-yellow-600">
+            <i data-lucide="clipboard-list" class="w-8 h-8"></i>
+          </div>
+          <h3 class="text-4xl font-extrabold text-yellow-700 mt-3">{{ stats.total_appointments }}</h3>
+          <p class="text-gray-600 font-medium mt-1">Total Appointments</p>
+        </div>
+      </div>
+
+      <div class="stat-card border-t-4 border-pink-500 hover-glow">
+        <div class="flex flex-col items-center">
+          <div class="icon-wrapper bg-pink-100 text-pink-600">
+            <i data-lucide="hourglass" class="w-8 h-8"></i>
+          </div>
+          <h3 class="text-4xl font-extrabold text-pink-700 mt-3">{{ stats.pending_visits }}</h3>
+          <p class="text-gray-600 font-medium mt-1">Pending Approvals</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ===== Table Section ===== -->
+    <div class="bg-white shadow-lg rounded-2xl overflow-hidden border border-gray-200">
+      <div class="flex items-center justify-between bg-gradient-to-r from-blue-600 to-green-500 text-white px-6 py-4">
+        <h3 class="text-xl font-semibold flex items-center gap-2">
+          <i data-lucide="file-text" class="w-5 h-5"></i> Registered Patients
+        </h3>
+        <span class="text-sm opacity-90 flex items-center gap-1">
+          <i data-lucide="clock" class="w-4 h-4"></i> Last updated: {{ stats.last_update }}
+        </span>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+          <thead class="bg-blue-50">
+            <tr>
+              <th class="py-3 px-5 text-gray-700 text-sm font-semibold uppercase border-b">ID</th>
+              <th class="py-3 px-5 text-gray-700 text-sm font-semibold uppercase border-b">Name</th>
+              <th class="py-3 px-5 text-gray-700 text-sm font-semibold uppercase border-b">Email</th>
+              <th class="py-3 px-5 text-gray-700 text-sm font-semibold uppercase border-b">Problem</th>
+              <th class="py-3 px-5 text-gray-700 text-sm font-semibold uppercase border-b">Appointment Date</th>
+              <th class="py-3 px-5 text-gray-700 text-sm font-semibold uppercase border-b text-center">Status</th>
+              <th class="py-3 px-5 text-gray-700 text-sm font-semibold uppercase border-b text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if users %}
+              {% for u in users %}
+              <tr class="hover:bg-blue-50 transition-all duration-200 {% if loop.index is even %}bg-gray-50{% endif %}">
+                <td class="py-3 px-5 font-medium text-gray-800">{{ u[0] }}</td>
+                <td class="py-3 px-5">{{ u[1] }}</td>
+                <td class="py-3 px-5 text-blue-600 underline underline-offset-2">{{ u[2] }}</td>
+                <td class="py-3 px-5">{{ u[3] if u[3] else '—' }}</td>
+                <td class="py-3 px-5">{{ u[4] if u[4] else '—' }}</td>
+
+                <!-- === Status Column === -->
+                <td class="py-3 px-5 text-center">
+                  {% if u[5] == 1 %}
+                    <span class="px-3 py-1 bg-green-100 text-green-700 font-medium rounded-full text-sm shadow-sm flex items-center justify-center gap-1">
+                      <i data-lucide="check-circle" class="w-4 h-4"></i> Approved
+                    </span>
+                  {% else %}
+                    <span class="px-3 py-1 bg-red-100 text-red-700 font-medium rounded-full text-sm shadow-sm flex items-center justify-center gap-1">
+                      <i data-lucide="clock" class="w-4 h-4"></i> Pending
+                    </span>
+                  {% endif %}
+                </td>
+
+                <!-- === Action Button === -->
+                <td class="py-3 px-5 text-center">
+                  {% if u[5] == 1 %}
+                    <button disabled
+                            class="px-4 py-1 bg-gray-300 text-gray-600 rounded-md cursor-not-allowed flex items-center justify-center gap-1">
+                      <i data-lucide="check" class="w-4 h-4"></i> Verified
+                    </button>
+                  {% else %}
+                    <a href="{{ url_for('admin.verify_user', user_id=u[0]) }}"
+                       class="px-4 py-1 bg-yellow-500 hover:bg-yellow-600 text-white rounded-md transition duration-200 flex items-center justify-center gap-1">
+                      <i data-lucide="refresh-ccw" class="w-4 h-4"></i> Re-Verify
+                    </a>
+                  {% endif %}
+                </td>
+              </tr>
+              {% endfor %}
+            {% else %}
+              <tr>
+                <td colspan="7" class="text-center py-6 text-gray-500 italic">No patients registered yet.</td>
+              </tr>
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 🌟 Styles -->
+<style>
+.stat-card {
+  background: white;
+  border-radius: 20px;
+  padding: 24px;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+}
+.icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+}
+
+/* 🌈 Glow Animation */
+.hover-glow:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0 20px rgba(0,123,255,0.3), 0 0 30px rgba(0,255,150,0.2);
+}
+.hover-glow:hover .icon-wrapper {
+  box-shadow: 0 0 25px rgba(0,123,255,0.4);
+  transform: scale(1.1);
+}
+</style>
+
+<!-- ✅ Lucide Icons -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+  });
+</script>
+
+{% endblock %}

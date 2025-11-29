@@ -1,0 +1,246 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="verify-section">
+  <div class="verify-card">
+    <h2 class="title flex items-center justify-center gap-2">
+      <i data-lucide="scan-face" class="w-7 h-7 text-blue-600"></i>
+      Face Verification for <span class="highlight">{{ name }}</span>
+    </h2>
+    <p class="subtitle">
+      Ensure good lighting and align the patient’s face within the camera view.
+    </p>
+
+    <!-- Camera Feed -->
+    <div class="camera-container">
+      <video id="video" autoplay playsinline></video>
+      <canvas id="canvas" style="display:none;"></canvas>
+      <div id="overlay"></div>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar-container">
+      <div id="progress-bar"></div>
+    </div>
+
+    <p id="status" class="status-text flex items-center justify-center gap-2">
+      <i data-lucide="clock" class="w-5 h-5 text-gray-500"></i>
+      Waiting to start verification...
+    </p>
+
+    <div class="btn-group">
+      <button id="startBtn" class="btn primary flex items-center justify-center gap-2">
+        <i data-lucide="play-circle" class="w-5 h-5"></i> Start Verification
+      </button>
+      <a href="{{ url_for('admin.dashboard') }}" class="btn secondary flex items-center justify-center gap-2">
+        <i data-lucide="home" class="w-5 h-5"></i> Back to Dashboard
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+const video = document.getElementById('video');
+const canvas = document.getElementById('canvas');
+const startBtn = document.getElementById('startBtn');
+const progressBar = document.getElementById('progress-bar');
+const overlay = document.getElementById('overlay');
+const statusText = document.getElementById('status');
+const userId = "{{ user_id }}";
+
+navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } })
+  .then(stream => video.srcObject = stream)
+  .catch(err => {
+    statusText.innerHTML = `<i data-lucide="alert-triangle" class="w-5 h-5 text-red-500"></i> Camera access denied`;
+    statusText.style.color = "#dc3545";
+    startBtn.disabled = true;
+    lucide.createIcons();
+  });
+
+async function sendFrame() {
+  const ctx = canvas.getContext('2d');
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
+  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+  const imgData = canvas.toDataURL('image/jpeg');
+
+  overlay.style.opacity = "0.6";
+  setTimeout(() => overlay.style.opacity = "0", 120);
+
+  const res = await fetch("{{ url_for('admin.verify_user_frame') }}", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ image: imgData, user_id: userId })
+  });
+  return await res.json();
+}
+
+startBtn.onclick = async () => {
+  startBtn.disabled = true;
+  statusText.innerHTML = `<i data-lucide="loader" class="animate-spin w-5 h-5 text-blue-500"></i> Verifying face...`;
+  lucide.createIcons();
+
+  let attempts = 0;
+  const maxAttempts = 40;
+  let verified = false;
+
+  while (attempts < maxAttempts) {
+    const result = await sendFrame();
+    progressBar.style.width = `${(attempts / maxAttempts) * 100}%`;
+
+    if (result.status === "approved") {
+      statusText.innerHTML = `<i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i> Face verified successfully!`;
+      verified = true;
+      break;
+    } else if (result.status === "failed") {
+      statusText.innerHTML = `<i data-lucide="x-circle" class="w-5 h-5 text-red-500"></i> Wrong person detected!`;
+      break;
+    } else if (result.status === "no_face") {
+      statusText.innerHTML = `<i data-lucide="alert-triangle" class="w-5 h-5 text-yellow-500"></i> No face detected...`;
+    }
+
+    attempts++;
+    await new Promise(r => setTimeout(r, 250));
+  }
+
+  progressBar.style.width = "100%";
+
+  if (verified) {
+    progressBar.classList.add("bg-green-500");
+    setTimeout(() => window.location.href = "{{ url_for('admin.dashboard') }}", 1500);
+  } else {
+    progressBar.classList.add("bg-red-500");
+    startBtn.disabled = false;
+  }
+  lucide.createIcons();
+};
+
+window.onload = () => lucide.createIcons();
+</script>
+
+<style>
+.verify-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 90vh;
+  padding: 40px 20px;
+  background: linear-gradient(135deg, #f0f9ff, #e8f5e9);
+}
+
+.verify-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 40px 50px;
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  border: 1px solid rgba(0, 123, 255, 0.15);
+  backdrop-filter: blur(10px);
+}
+
+.title {
+  font-size: 1.8rem;
+  color: #222;
+  font-weight: 700;
+}
+.highlight { color: #007bff; font-weight: 700; }
+.subtitle {
+  color: #555;
+  margin-bottom: 25px;
+  font-size: 1rem;
+}
+
+.camera-container {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  aspect-ratio: 4/3;
+  margin: 0 auto;
+  border-radius: 14px;
+  border: 3px solid #007bff;
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 0 15px rgba(0, 123, 255, 0.3);
+}
+video { width: 100%; height: 100%; object-fit: cover; }
+#overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.8);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.progress-bar-container {
+  width: 100%;
+  background: #e0e0e0;
+  height: 12px;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 20px 0;
+}
+#progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #007bff, #28a745);
+  transition: width 0.4s ease-in-out;
+  border-radius: 10px;
+}
+
+.status-text {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #444;
+  margin-top: 10px;
+}
+
+.btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.btn {
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  padding: 12px 28px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+}
+.btn.primary {
+  background: linear-gradient(90deg, #007bff, #00c6ff);
+  color: #fff;
+}
+.btn.primary:hover { transform: scale(1.05); box-shadow: 0 0 15px rgba(0, 123, 255, 0.3); }
+.btn.secondary {
+  background: linear-gradient(90deg, #6c757d, #868e96);
+  color: #fff;
+}
+.btn.secondary:hover { transform: scale(1.05); box-shadow: 0 0 15px rgba(108,117,125,0.3); }
+
+@media (max-width: 768px) {
+  .verify-card { padding: 30px 25px; }
+  .title { font-size: 1.5rem; }
+  .subtitle { font-size: 0.95rem; }
+  .btn { width: 100%; padding: 12px; }
+}
+@media (max-width: 480px) {
+  .verify-section { padding: 30px 15px; }
+  .verify-card { padding: 25px 20px; }
+  .title { font-size: 1.3rem; }
+  .subtitle { font-size: 0.9rem; }
+  .btn { font-size: 0.9rem; padding: 10px; }
+}
+</style>
+
+{% endblock %}

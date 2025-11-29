@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- ✅ AOS Scroll Animation CSS -->
+<link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+
+<!-- ================= HERO HEADER ================= -->
+<section class="relative bg-gradient-to-r from-blue-600 to-green-500 text-white py-20 md:py-28 overflow-hidden">
+  <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/white-diamond.png')] opacity-10"></div>
+
+  <div class="relative container mx-auto text-center px-4 sm:px-6 z-10" data-aos="fade-up">
+    <div class="flex justify-center mb-6">
+      <div class="bg-white/10 p-4 rounded-full shadow-lg">
+        <i data-lucide="sparkles" class="w-10 h-10 text-white"></i>
+      </div>
+    </div>
+    <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 bg-gradient-to-r from-white to-green-200 bg-clip-text text-transparent">
+      Key Features of CareSync
+    </h1>
+    <p class="text-base sm:text-lg text-white/90 max-w-2xl mx-auto leading-relaxed px-2">
+      Discover how <strong>CareSync</strong> empowers hospitals with next-gen AI and automation to deliver faster, safer, and smarter care.
+    </p>
+  </div>
+</section>
+
+<!-- ================= FEATURE GRID ================= -->
+<section class="py-16 md:py-20 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center">
+    <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-10 flex justify-center items-center gap-2" data-aos="fade-down">
+      <i data-lucide="puzzle" class="w-6 h-6 text-green-600"></i> Core Features
+    </h2>
+
+    <div class="grid gap-8 sm:gap-10 md:grid-cols-2 lg:grid-cols-4">
+
+      <!-- Feature 1 -->
+      <div class="p-6 sm:p-8 bg-gradient-to-b from-blue-50 to-white rounded-2xl shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-300"
+           data-aos="zoom-in" data-aos-delay="100">
+        <div class="flex justify-center mb-4">
+          <div class="bg-blue-100 p-4 rounded-full"><i data-lucide="calendar" class="w-8 h-8 text-blue-600"></i></div>
+        </div>
+        <h3 class="text-lg sm:text-xl font-semibold mb-3">Online Appointment Booking</h3>
+        <p class="text-gray-600 text-sm sm:text-base">Book appointments instantly from anywhere — simple, fast, and paperless.</p>
+      </div>
+
+      <!-- Feature 2 -->
+      <div class="p-6 sm:p-8 bg-gradient-to-b from-green-50 to-white rounded-2xl shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-300"
+           data-aos="zoom-in" data-aos-delay="200">
+        <div class="flex justify-center mb-4">
+          <div class="bg-green-100 p-4 rounded-full"><i data-lucide="brain-circuit" class="w-8 h-8 text-green-600"></i></div>
+        </div>
+        <h3 class="text-lg sm:text-xl font-semibold mb-3">AI Face Recognition</h3>
+        <p class="text-gray-600 text-sm sm:text-base">Verify patients using facial recognition AI for a touchless, secure experience.</p>
+      </div>
+
+      <!-- Feature 3 -->
+      <div class="p-6 sm:p-8 bg-gradient-to-b from-yellow-50 to-white rounded-2xl shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-300"
+           data-aos="zoom-in" data-aos-delay="300">
+        <div class="flex justify-center mb-4">
+          <div class="bg-yellow-100 p-4 rounded-full"><i data-lucide="shield-check" class="w-8 h-8 text-yellow-600"></i></div>
+        </div>
+        <h3 class="text-lg sm:text-xl font-semibold mb-3">End-to-End Data Security</h3>
+        <p class="text-gray-600 text-sm sm:text-base">Your health data is fully encrypted to maintain confidentiality and privacy.</p>
+      </div>
+
+      <!-- Feature 4 -->
+      <div class="p-6 sm:p-8 bg-gradient-to-b from-pink-50 to-white rounded-2xl shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-300"
+           data-aos="zoom-in" data-aos-delay="400">
+        <div class="flex justify-center mb-4">
+          <div class="bg-pink-100 p-4 rounded-full"><i data-lucide="bell-ring" class="w-8 h-8 text-pink-600"></i></div>
+        </div>
+        <h3 class="text-lg sm:text-xl font-semibold mb-3">Real-Time Notifications</h3>
+        <p class="text-gray-600 text-sm sm:text-base">Get instant updates on appointments, check-ins, and reports with zero delay.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ADDITIONAL HIGHLIGHTS ================= -->
+<section class="py-14 md:py-20 bg-gradient-to-r from-blue-50 to-green-50">
+  <div class="max-w-7xl mx-auto text-center px-4 sm:px-6" data-aos="fade-up">
+    <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-6 flex justify-center items-center gap-2">
+      <i data-lucide="lightbulb" class="w-6 h-6 text-yellow-500"></i> Why Choose CareSync?
+    </h2>
+    <p class="text-gray-600 max-w-3xl mx-auto mb-12 text-sm sm:text-base">
+      Designed for hospitals ready for digital transformation — CareSync delivers speed, security, and simplicity through AI-powered automation.
+    </p>
+
+    <div class="grid gap-6 sm:gap-8 md:grid-cols-3 text-left">
+      
+      <div class="bg-white p-5 sm:p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border-t-4 border-blue-500"
+           data-aos="fade-right" data-aos-delay="100">
+        <h3 class="font-semibold text-blue-600 mb-2 flex items-center gap-2">
+          <i data-lucide="cpu" class="w-5 h-5"></i> AI-Powered Accuracy
+        </h3>
+        <p class="text-gray-600 text-sm sm:text-base">Facial recognition ensures 99% accuracy in identifying patients seamlessly.</p>
+      </div>
+
+      <div class="bg-white p-5 sm:p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border-t-4 border-green-500"
+           data-aos="fade-up" data-aos-delay="200">
+        <h3 class="font-semibold text-green-600 mb-2 flex items-center gap-2">
+          <i data-lucide="cloud" class="w-5 h-5"></i> Cloud Integrated
+        </h3>
+        <p class="text-gray-600 text-sm sm:text-base">Access and manage appointments securely from any device, anywhere.</p>
+      </div>
+
+      <div class="bg-white p-5 sm:p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border-t-4 border-yellow-500"
+           data-aos="fade-left" data-aos-delay="300">
+        <h3 class="font-semibold text-yellow-600 mb-2 flex items-center gap-2">
+          <i data-lucide="message-circle" class="w-5 h-5"></i> Smart Alerts
+        </h3>
+        <p class="text-gray-600 text-sm sm:text-base">Receive intelligent reminders and updates for every booking and visit.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ✅ AOS + Lucide Scripts -->
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({ once: true, duration: 900, easing: 'ease-in-out' });
+  lucide.createIcons();
+</script>
+
+{% endblock %}

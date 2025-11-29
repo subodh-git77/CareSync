@@ -1,0 +1,255 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="camera-section">
+  <div class="capture-card">
+    <h2 class="title flex items-center justify-center gap-2">
+      <i data-lucide="camera" class="text-blue-600 w-6 h-6"></i>
+      Capturing Face Data for <span class="highlight">{{ name }}</span>
+    </h2>
+    <p class="subtitle">
+      Look directly into the camera — we’ll automatically capture and train your facial model.
+    </p>
+
+    <!-- ====== Camera Feed ====== -->
+    <div class="camera-container">
+      <video id="video" autoplay playsinline></video>
+      <canvas id="canvas" style="display:none;"></canvas>
+      <div id="flash-overlay"></div>
+      <div class="camera-border"></div>
+    </div>
+
+    <!-- ====== Progress Bar ====== -->
+    <div class="progress-container">
+      <div id="progress-bar"></div>
+    </div>
+    <p id="progress-text">Captured: <span id="count">0</span> / 40</p>
+
+    <!-- ====== Status ====== -->
+    <p id="status-text" class="status-info flex items-center justify-center gap-2">
+      <i data-lucide="target" class="w-5 h-5 text-blue-500"></i>
+      <span>Ready — tap “Start Capture” to begin!</span>
+    </p>
+
+    <!-- ====== Buttons ====== -->
+    <div class="btn-group">
+      <button id="startBtn" class="btn flex items-center justify-center gap-2">
+        <i data-lucide="play-circle" class="w-5 h-5"></i> Start Capture
+      </button>
+      <a href="/" class="btn back flex items-center justify-center gap-2">
+        <i data-lucide="home" class="w-5 h-5"></i> Back Home
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+const video = document.getElementById('video');
+const canvas = document.getElementById('canvas');
+const progressBar = document.getElementById('progress-bar');
+const countText = document.getElementById('count');
+const startBtn = document.getElementById('startBtn');
+const statusText = document.getElementById('status-text');
+const flashOverlay = document.getElementById('flash-overlay');
+let sampleNum = 0;
+const maxSamples = 40;
+const userId = "{{ user_id }}";
+
+navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 } })
+  .then(stream => video.srcObject = stream)
+  .catch(err => {
+    alert("⚠️ Camera access denied or unavailable: " + err);
+    startBtn.disabled = true;
+  });
+
+async function captureFrame() {
+  const ctx = canvas.getContext('2d');
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
+  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+  const imgData = canvas.toDataURL('image/jpeg', 0.85);
+
+  flashOverlay.style.opacity = '1';
+  setTimeout(() => (flashOverlay.style.opacity = '0'), 80);
+
+  const res = await fetch("{{ url_for('register.save_face') }}", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ image: imgData, user_id: userId, sample_num: sampleNum })
+  });
+  return res.json();
+}
+
+async function finishTraining() {
+  statusText.innerHTML = `<i data-lucide="loader" class="animate-spin w-5 h-5"></i> Training model, please wait...`;
+  const res = await fetch("{{ url_for('register.finish_capture') }}", { method: "POST" });
+  const data = await res.json();
+  if (data.status === "trained") {
+    progressBar.style.background = "#28a745";
+    statusText.innerHTML = `<i data-lucide="check-circle" class="text-green-500 w-5 h-5"></i> Model trained successfully!`;
+    setTimeout(() => window.location.href = "{{ url_for('patient.login_page') }}", 2000);
+  } else {
+    statusText.innerHTML = `<i data-lucide="x-circle" class="text-red-500 w-5 h-5"></i> Training failed. Try again.`;
+    startBtn.disabled = false;
+  }
+  lucide.createIcons();
+}
+
+startBtn.onclick = async () => {
+  startBtn.disabled = true;
+  startBtn.innerHTML = `<i data-lucide="loader" class="animate-spin w-5 h-5"></i> Capturing...`;
+  statusText.innerHTML = `<i data-lucide="scan-face" class="w-5 h-5 text-blue-500"></i> Capturing faces...`;
+  lucide.createIcons();
+
+  for (sampleNum = 1; sampleNum <= maxSamples; sampleNum++) {
+    const response = await captureFrame();
+    if (response.status === "success" || response.status === "noface") {
+      countText.textContent = response.saved || sampleNum;
+      progressBar.style.width = `${(sampleNum / maxSamples) * 100}%`;
+    }
+    await new Promise(r => setTimeout(r, 250));
+  }
+
+  statusText.innerHTML = `<i data-lucide="check-circle" class="text-green-500 w-5 h-5"></i> Capture complete! Starting training...`;
+  progressBar.style.background = "#28a745";
+  lucide.createIcons();
+  await finishTraining();
+};
+
+window.onload = () => lucide.createIcons();
+</script>
+
+<style>
+.camera-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 20px;
+  background: linear-gradient(135deg, #e8f5e9, #e3f2fd);
+  min-height: 90vh;
+}
+
+.capture-card {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(14px);
+  border-radius: 20px;
+  padding: 40px 50px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.1);
+  max-width: 650px;
+  width: 100%;
+  text-align: center;
+  transition: transform 0.3s ease;
+  border: 1px solid rgba(0, 123, 255, 0.15);
+}
+.capture-card:hover { transform: translateY(-4px); }
+
+.title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #222;
+}
+.highlight { color: #007bff; font-weight: 700; }
+.subtitle {
+  color: #555;
+  margin-bottom: 25px;
+  font-size: 1rem;
+}
+
+.camera-container {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  aspect-ratio: 4 / 3;
+  border-radius: 16px;
+  overflow: hidden;
+  margin: 20px auto;
+  background: #000;
+}
+video { width: 100%; height: 100%; object-fit: cover; }
+#flash-overlay {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(255,255,255,0.8);
+  opacity: 0; transition: opacity 0.2s;
+}
+.camera-border {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  border: 3px solid #007bff;
+  border-radius: 16px;
+  box-shadow: 0 0 15px rgba(0, 123, 255, 0.5);
+  animation: glow 2s ease-in-out infinite alternate;
+}
+@keyframes glow {
+  from { box-shadow: 0 0 10px rgba(0,123,255,0.4); }
+  to { box-shadow: 0 0 25px rgba(0,200,255,0.7); }
+}
+
+.progress-container {
+  background: #e0e0e0;
+  border-radius: 10px;
+  height: 14px;
+  width: 100%;
+  margin: 20px 0;
+  overflow: hidden;
+}
+#progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #007bff, #28a745);
+  transition: width 0.4s ease-in-out;
+  border-radius: 10px;
+}
+
+.status-info {
+  font-size: 1.1rem;
+  margin-top: 10px;
+  color: #444;
+  font-weight: 600;
+  text-align: center;
+  gap: 8px;
+}
+
+.btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+.btn {
+  background: linear-gradient(90deg, #007bff, #00c6ff);
+  color: white;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 180px;
+}
+.btn:hover { transform: scale(1.05); box-shadow: 0 0 15px rgba(0, 123, 255, 0.3); }
+.btn.back { background: linear-gradient(90deg, #6c757d, #868e96); }
+.btn.back:hover { background: linear-gradient(90deg, #5a6268, #6c757d); }
+
+@media (max-width: 768px) {
+  .capture-card { padding: 30px 25px; }
+  .btn { width: 100%; padding: 12px 0; }
+  .btn-group { flex-direction: column; }
+  .title { font-size: 1.5rem; }
+  .subtitle { font-size: 0.95rem; }
+}
+@media (max-width: 480px) {
+  .camera-section { padding: 40px 10px; }
+  .title { font-size: 1.3rem; }
+  .subtitle { font-size: 0.85rem; margin-bottom: 15px; }
+  .camera-border { border-width: 2px; }
+  .btn { width: 100%; font-size: 0.95rem; }
+}
+</style>
+
+{% endblock %}

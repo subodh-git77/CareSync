@@ -1,0 +1,221 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="verify-section">
+  <div class="verify-card {% if recognized %}success{% else %}fail{% endif %}">
+    {% if recognized %}
+      <div class="icon success">
+        <i data-lucide="check-circle" class="w-16 h-16"></i>
+      </div>
+      <h2>Patient Verified Successfully</h2>
+      <p>Welcome back, {{ name or "Patient" }}! Your face has been verified.</p>
+      <a href="{{ url_for('admin.dashboard') }}" class="btn primary flex items-center justify-center gap-2">
+        <i data-lucide="layout-dashboard" class="w-5 h-5"></i> Go to Dashboard
+      </a>
+    {% else %}
+      <div class="icon fail">
+        <i data-lucide="x-circle" class="w-16 h-16"></i>
+      </div>
+      <h2>Verification Failed</h2>
+      <p>We couldn't verify your face. Please try again or contact the helpdesk.</p>
+      <div class="btn-group">
+        <a href="{{ url_for('detect.detect_page') }}" class="btn retry flex items-center justify-center gap-2">
+          <i data-lucide="refresh-ccw" class="w-5 h-5"></i> Try Again
+        </a>
+        <a href="/" class="btn secondary flex items-center justify-center gap-2">
+          <i data-lucide="home" class="w-5 h-5"></i> Home
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<!-- 🎈 Floating Bubble Animation -->
+<div class="bubbles">
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+</div>
+
+<script>
+  window.onload = () => lucide.createIcons();
+</script>
+
+<style>
+/* ===== Section Layout ===== */
+.verify-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 90vh;
+  position: relative;
+  background: linear-gradient(135deg, #e3f2fd, #e8f5e9);
+  overflow: hidden;
+  padding: 40px 20px;
+}
+
+/* ===== Floating Bubbles ===== */
+.bubbles {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  overflow: hidden;
+  z-index: 0;
+}
+.bubble {
+  position: absolute;
+  bottom: -100px;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 50%;
+  animation: rise 10s infinite ease-in;
+}
+.bubble:nth-child(1) { width: 80px; height: 80px; left: 20%; animation-duration: 12s; }
+.bubble:nth-child(2) { width: 100px; height: 100px; left: 60%; animation-duration: 15s; }
+.bubble:nth-child(3) { width: 50px; height: 50px; left: 80%; animation-duration: 9s; }
+.bubble:nth-child(4) { width: 120px; height: 120px; left: 35%; animation-duration: 18s; }
+.bubble:nth-child(5) { width: 60px; height: 60px; left: 10%; animation-duration: 11s; }
+
+@keyframes rise {
+  0% { transform: translateY(0) scale(1); opacity: 0.5; }
+  50% { opacity: 1; }
+  100% { transform: translateY(-1200px) scale(1.2); opacity: 0; }
+}
+
+/* ===== Verification Card ===== */
+.verify-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 50px 60px;
+  text-align: center;
+  max-width: 550px;
+  width: 100%;
+  z-index: 1;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  animation: fadeIn 0.7s ease-out;
+  border: 1px solid rgba(0,123,255,0.15);
+  transition: transform 0.3s ease;
+}
+.verify-card:hover {
+  transform: translateY(-3px);
+}
+.verify-card.success {
+  border-left: 6px solid #28a745;
+}
+.verify-card.fail {
+  border-left: 6px solid #dc3545;
+}
+
+/* ===== Icon Styling ===== */
+.icon {
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: center;
+  animation: pop 0.5s ease-in-out;
+}
+.icon.success i { color: #28a745; }
+.icon.fail i { color: #dc3545; }
+
+@keyframes pop {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ===== Text ===== */
+h2 {
+  font-size: 1.8rem;
+  color: #222;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+p {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 25px;
+}
+
+/* ===== Buttons ===== */
+.btn-group {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+.btn {
+  text-decoration: none;
+  padding: 12px 28px;
+  border-radius: 12px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.btn.primary {
+  background: linear-gradient(90deg, #007bff, #00c6ff);
+  color: #fff;
+}
+.btn.primary:hover {
+  background: linear-gradient(90deg, #0056b3, #0099ff);
+  transform: translateY(-2px);
+}
+.btn.retry {
+  background: linear-gradient(90deg, #28a745, #00c851);
+  color: #fff;
+}
+.btn.retry:hover {
+  background: linear-gradient(90deg, #218838, #009e4f);
+  transform: translateY(-2px);
+}
+.btn.secondary {
+  background: linear-gradient(90deg, #6c757d, #868e96);
+  color: #fff;
+}
+.btn.secondary:hover {
+  background: linear-gradient(90deg, #5a6268, #6c757d);
+}
+
+/* ===== Animations ===== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 768px) {
+  .verify-card {
+    padding: 35px 30px;
+  }
+  h2 {
+    font-size: 1.5rem;
+  }
+  p {
+    font-size: 0.95rem;
+  }
+  .btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 0.95rem;
+  }
+}
+@media (max-width: 480px) {
+  .verify-section {
+    padding: 30px 15px;
+  }
+  .verify-card {
+    padding: 25px 20px;
+  }
+  h2 {
+    font-size: 1.3rem;
+  }
+  .btn {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+}
+</style>
+
+{% endblock %}

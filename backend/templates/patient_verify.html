@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="verify-container">
+  <h2>🎥 Face Verification</h2>
+  {% if status == "failed" %}
+    <p class="error">❌ Wrong person detected. Access denied.</p>
+  {% else %}
+    <p>Verifying your identity... Please look into the camera.</p>
+  {% endif %}
+  <a href="{{ url_for('patient.login_page') }}" class="btn">Go Back</a>
+</div>
+{% endblock %}

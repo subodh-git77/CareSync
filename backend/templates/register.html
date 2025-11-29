@@ -1,0 +1,214 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- Patient Registration Page (icons inline with labels, no animations) -->
+<section class="min-h-screen flex items-center justify-center bg-animated-gradient py-12 px-4">
+  <div class="w-full max-w-3xl bg-white/95 backdrop-blur rounded-2xl shadow-lg border border-gray-100 p-8">
+
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <div class="w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-4 bg-gradient-to-br from-blue-500 to-indigo-600 shadow-sm">
+        <i data-lucide="user-plus" class="icon-white" aria-hidden="true"></i>
+      </div>
+
+      <h2 class="text-2xl font-bold text-gray-900">Register New Patient</h2>
+      <p class="text-gray-600 text-sm mt-2">
+        Fill out the form below to schedule your appointment and register for face recognition.
+      </p>
+    </div>
+
+    <!-- Registration Form -->
+    <form method="POST" action="{{ url_for('register.register_page') }}" class="grid gap-4 sm:grid-cols-2">
+
+      <!-- Patient ID -->
+      <div>
+        <label for="id" class="label-inline">
+          <i data-lucide="badge-check" class="label-icon" aria-hidden="true"></i>
+          <span class="label-text">Patient ID</span>
+        </label>
+        <input type="number" id="id" name="id" placeholder="Enter unique ID" required class="input-field">
+      </div>
+
+      <!-- Full Name -->
+      <div>
+        <label for="name" class="label-inline">
+          <i data-lucide="user" class="label-icon" aria-hidden="true"></i>
+          <span class="label-text">Full Name</span>
+        </label>
+        <input type="text" id="name" name="name" placeholder="Enter full name" required class="input-field">
+      </div>
+
+      <!-- Age -->
+      <div>
+        <label for="age" class="label-inline">
+          <i data-lucide="hash" class="label-icon" aria-hidden="true"></i>
+          <span class="label-text">Age</span>
+        </label>
+        <input type="number" id="age" name="age" placeholder="Enter age" required class="input-field">
+      </div>
+
+      <!-- Gender -->
+      <div>
+        <label for="gender" class="label-inline">
+          <i data-lucide="venus-and-mars" class="label-icon" aria-hidden="true"></i>
+          <span class="label-text">Gender</span>
+        </label>
+        <select id="gender" name="gender" required class="input-field">
+          <option value="">Select Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      <!-- Email (span across) -->
+      <div class="sm:col-span-2">
+        <label for="email" class="label-inline">
+          <i data-lucide="mail" class="label-icon" aria-hidden="true"></i>
+          <span class="label-text">Email Address</span>
+        </label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required class="input-field">
+      </div>
+
+      <!-- Password (span across) -->
+      <div class="sm:col-span-2">
+        <label for="password" class="label-inline">
+          <i data-lucide="lock" class="label-icon" aria-hidden="true"></i>
+          <span class="label-text">Create Password</span>
+        </label>
+        <input type="password" id="password" name="password" placeholder="Create a strong password" required class="input-field">
+      </div>
+
+      <!-- Problem (span across) -->
+      <div class="sm:col-span-2">
+        <label for="problem" class="label-inline">
+          <i data-lucide="stethoscope" class="label-icon" aria-hidden="true"></i>
+          <span class="label-text">Health Problem</span>
+        </label>
+        <textarea id="problem" name="problem" rows="3" placeholder="Describe your health issue briefly" required class="input-field"></textarea>
+      </div>
+
+      <!-- Appointment date (span across) -->
+      <div class="sm:col-span-2">
+        <label for="appointment" class="label-inline">
+          <i data-lucide="calendar-days" class="label-icon" aria-hidden="true"></i>
+          <span class="label-text">Preferred Check-up Date</span>
+        </label>
+        <input type="date" id="appointment" name="appointment" required class="input-field">
+      </div>
+
+      <!-- Submit -->
+      <div class="sm:col-span-2 text-center mt-2">
+        <button type="submit" class="submit-btn">
+          <i data-lucide="camera" class="btn-icon" aria-hidden="true"></i>
+          Register & Capture Face
+        </button>
+      </div>
+    </form>
+
+    <!-- Note -->
+    <div class="note-box mt-6">
+      <i data-lucide="info" class="note-icon" aria-hidden="true"></i>
+      <span class="note-text">After registration, your webcam will open to capture your facial data for secure identity verification.</span>
+    </div>
+
+    <!-- Back link -->
+    <div class="text-center mt-5">
+      <a href="/" class="back-link">
+        <i data-lucide="arrow-left" class="back-icon" aria-hidden="true"></i> Back to Home
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- Styles (plain CSS, no animations) -->
+<style>
+  /* container background kept subtle */
+  .bg-animated-gradient { background: linear-gradient(135deg,#eef6ff,#f3fff6); }
+
+  /* header icon */
+  .icon-white { width: 36px; height: 36px; color: #fff; }
+
+  /* label inline */
+  .label-inline {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    color: #334155; /* slate-700 */
+    margin-bottom: 6px;
+  }
+  .label-icon { width: 16px; height: 16px; color: #2563eb; } /* blue-600 */
+  .label-text { line-height: 1; }
+
+  /* inputs */
+  .input-field {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #d1d5db; /* gray-300 */
+    border-radius: 10px;
+    background: #fff;
+    color: #0f172a; /* slate-900 */
+    font-size: 0.95rem;
+    box-sizing: border-box;
+  }
+  .input-field:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 4px rgba(37,99,235,0.08);
+  }
+
+  /* submit */
+  .submit-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    background: linear-gradient(90deg,#2563eb,#16a34a);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .submit-btn:hover { filter: brightness(0.95); }
+  .btn-icon { width: 18px; height: 18px; color: #fff; }
+
+  /* note box */
+  .note-box {
+    margin-top: 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #eff6ff; /* blue-50 */
+    border: 1px solid #dbeafe; /* blue-100 */
+    color: #0369a1; /* sky-700 */
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+  }
+  .note-icon { width: 16px; height: 16px; color: #0369a1; }
+
+  /* back link */
+  .back-link { color: #2563eb; font-weight: 600; text-decoration: none; display: inline-flex; gap: 8px; align-items: center; }
+  .back-icon { width: 16px; height: 16px; color: #2563eb; }
+
+  /* responsive tweaks */
+  @media (max-width: 640px) {
+    .w-full.max-w-3xl { padding: 1rem; }
+  }
+</style>
+
+<!-- Ensure lucide icons render -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    if (typeof lucide !== 'undefined') {
+      lucide.createIcons();
+    } else {
+      console.warn("Lucide not loaded — check base.html script include.");
+    }
+  });
+</script>
+
+{% endblock %}

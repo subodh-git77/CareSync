@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>CareSync - Smart Hospital Appointments</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ✅ Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- ✅ Tailwind Theme Extension -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: "#007bff",
+            accent: "#16a34a",
+            light: "#f4f7fb",
+          },
+          animation: {
+            pulseHeartFast: 'pulseHeart 1s ease-in-out infinite',
+            pulseHeartSlow: 'pulseHeart 1.5s ease-in-out infinite',
+          },
+          keyframes: {
+            pulseHeart: {
+              '0%, 100%': { transform: 'scale(1)' },
+              '50%': { transform: 'scale(1.2)' },
+            },
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- ✅ Custom CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="bg-gradient-to-br from-blue-50 via-white to-green-50 min-h-screen flex flex-col">
+
+  <!-- ================= HEADER ================= -->
+  <header class="sticky top-0 bg-white/80 backdrop-blur-md shadow-sm z-50">
+    <div class="max-w-7xl mx-auto flex items-center justify-between p-4">
+
+      <!-- Left: Logo -->
+      <div class="flex items-center gap-3 group">
+        <div class="h-10 w-10 flex items-center justify-center bg-gradient-to-br from-blue-500 to-green-500 rounded-lg shadow-md transition-transform duration-300 group-hover:animate-pulseHeartSlow">
+          <i data-lucide="heart" class="text-white"></i>
+        </div>
+        <div>
+          <h1 class="text-2xl font-extrabold bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
+            CareSync
+          </h1>
+          <p class="text-sm text-gray-600 font-medium">Smart Hospital Appointments</p>
+        </div>
+      </div>
+
+      <!-- Right: Desktop Navigation -->
+      <nav id="nav-menu" class="hidden md:flex items-center gap-4">
+        <a href="{{ url_for('home') }}" class="text-gray-700 hover:text-blue-600 font-semibold transition-colors">Home</a>
+        <a href="{{ url_for('features') }}" class="text-gray-700 hover:text-blue-600 font-semibold transition-colors">Features</a>
+        <a href="{{ url_for('register.register_page') }}" class="text-gray-700 hover:text-blue-600 font-semibold transition-colors">Register</a>
+        <a href="{{ url_for('patient.login_page') }}" class="px-6 py-3 border-2 border-green-500 text-green-500 font-semibold rounded-full relative overflow-hidden group transition-all duration-300">
+          <span class="absolute inset-0 bg-green-500 group-hover:translate-x-0 translate-x-[-100%] transition-transform duration-300 rounded-full z-0"></span>
+          <span class="relative z-10 group-hover:text-white transition-colors duration-300">
+              Login & Verify
+          </span>
+        </a>
+      </nav>
+
+      <!-- Mobile Menu Button -->
+      <button id="menu-btn" class="md:hidden flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-blue-600 focus:outline-none">
+        <i data-lucide="menu" class="w-6 h-6"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Dropdown -->
+    <div id="mobile-menu" class="hidden md:hidden flex flex-col bg-white shadow-lg border-t border-gray-100">
+      <a href="{{ url_for('home') }}" class="py-3 px-6 border-b text-gray-700 hover:bg-blue-50">Home</a>
+      <a href="{{ url_for('features') }}" class="py-3 px-6 border-b text-gray-700 hover:bg-blue-50">Features</a>
+      <a href="{{ url_for('register.register_page') }}" class="py-3 px-6 border-b text-gray-700 hover:bg-blue-50">Register</a>
+      <a href="{{ url_for('patient.login_page') }}" class="py-3 px-6 text-green-600 font-semibold hover:bg-green-50">Login & Verify</a>
+    </div>
+  </header>
+
+  <!-- ================= FLASH MESSAGES ================= -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="max-w-4xl mx-auto mt-6 w-full px-4 space-y-2">
+        {% for category, msg in messages %}
+          <div class="p-4 rounded-lg border text-center
+                      {% if category == 'success' %} bg-green-50 border-green-300 text-green-700
+                      {% elif category == 'danger' %} bg-red-50 border-red-300 text-red-700
+                      {% elif category == 'warning' %} bg-yellow-50 border-yellow-300 text-yellow-700
+                      {% else %} bg-blue-50 border-blue-300 text-blue-700 {% endif %}">
+            {{ msg }}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <!-- ================= MAIN CONTENT ================= -->
+  <main class="flex-grow container mx-auto px-4 py-10">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="bg-gradient-to-r from-blue-600 to-green-600 text-white py-8 mt-10 shadow-inner">
+    <div class="max-w-6xl mx-auto text-center flex flex-col items-center gap-2 px-4">
+      <div class="flex items-center gap-2 mb-2 group">
+        <div class="h-8 w-8 flex items-center justify-center bg-gradient-to-br from-blue-500 to-green-500 rounded-lg shadow-md transition-transform duration-300 group-hover:animate-pulseHeartFast">
+          <i data-lucide="heart" class="text-white"></i>
+        </div>
+        <h3 class="text-xl font-semibold">CareSync</h3>
+      </div>
+      <p class="text-white/90 text-sm md:text-base">AI-Powered Smart Hospital Appointment & Face Recognition System</p>
+      <p class="text-white/70 mt-3 text-xs md:text-sm">© 2025 CareSync. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <!-- ✅ Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      lucide.createIcons();
+
+      // Mobile menu toggle
+      const menuBtn = document.getElementById('menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      menuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+    });
+  </script>
+</body>
+</html>
