@@ -115,7 +115,7 @@ Face-Detection/
 
 ### 1️⃣ Clone the Repository
 ```bash
-git clone https://github.com/subodh-git77/caresync
+git clone https://github.com/subodh-git77/CareSync.git
 ```
 ### 2️⃣ Navigate to Project Directory
 ```bash
