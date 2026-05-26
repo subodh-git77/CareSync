@@ -1,0 +1,14 @@
+.env
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.whl
+
+dataset/
+recognizer/
+
+backend/database.db
+database.db
+
+.DS_Store
