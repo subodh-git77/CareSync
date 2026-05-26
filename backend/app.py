@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 import os
 import socket
 
-from database import init_db, ensure_approved_column
+from backend.database import init_db, ensure_approved_column
 
 # === Load environment variables ===
 load_dotenv()
@@ -28,11 +28,11 @@ init_db()
 ensure_approved_column()
 
 # === Import Blueprints ===
-from routes.register_routes import register_bp
-from routes.train_routes import train_bp
-from routes.detect_routes import detect_bp
-from routes.admin_routes import admin_bp
-from routes.patient_routes import patient_bp
+from backend.routes.register_routes import register_bp
+from backend.routes.train_routes import train_bp
+from backend.routes.detect_routes import detect_bp
+from backend.routes.admin_routes import admin_bp
+from backend.routes.patient_routes import patient_bp
 
 # === Register Blueprints ===
 app.register_blueprint(register_bp, url_prefix="/register")
@@ -46,19 +46,16 @@ app.register_blueprint(patient_bp, url_prefix="/patient")
 # ===============================
 @app.route("/")
 def home():
-    """Main landing page"""
     return render_template("index.html")
 
 
 @app.route("/features")
 def features():
-    """Show CareSync features page"""
     return render_template("features.html")
 
 
 @app.route("/login")
 def login_redirect():
-    """Redirect to patient login"""
     return redirect(url_for("patient.login_page"))
 
 
@@ -67,13 +64,11 @@ def login_redirect():
 # ===============================
 @app.errorhandler(404)
 def not_found(e):
-    """Custom 404 Page"""
     return render_template("404.html"), 404
 
 
 @app.errorhandler(500)
 def internal_error(e):
-    """Custom 500 Page"""
     return render_template("500.html", error=str(e)), 500
 
 
@@ -91,7 +86,6 @@ if __name__ == "__main__":
 
         print(f"Localhost: http://127.0.0.1:{port}/")
         print(f"Mobile Link: http://{local_ip}:{port}/")
-        print("Make sure your phone and laptop are connected to the same Wi-Fi network.")
     except Exception:
         print(f"Localhost: http://127.0.0.1:{port}/")
 
